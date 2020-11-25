@@ -1,0 +1,27 @@
+---
+  - name: make required directories
+    file:
+      path: "/opt/compose/{{ role_name }}/{{ item }}"
+      state: directory
+    loop:
+      - "config"
+      - "certs"
+
+  - name: template {{ role_name }} compose file
+    template:
+      src: docker-compose.yml.j2
+      dest: "/opt/compose/{{ role_name }}/docker-compose.yml"
+    notify: compose up
+
+  - name: template {{ role_name }} config file
+    template:
+      src: traefik.yml.j2
+      dest: "/opt/compose/{{ role_name }}/traefik.yml"
+    notify: restart traefik
+
+  - name: Ensure log file exists
+    copy:
+      content: ""
+      dest: "/opt/compose/{{ role_name }}/log"
+      force: no
+    notify: restart traefik

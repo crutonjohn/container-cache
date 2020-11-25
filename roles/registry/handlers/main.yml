@@ -1,0 +1,5 @@
+---
+  - name: compose up
+    docker_compose:
+      project_src: "/opt/compose/{{ role_name }}"
+      state: present

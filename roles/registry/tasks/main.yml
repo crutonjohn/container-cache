@@ -1,0 +1,14 @@
+---
+  - name: make required directories
+    file:
+      path: "/opt/compose/{{ role_name }}/"
+      state: directory
+
+  - name: template {{ role_name }} compose file
+    template:
+      src: docker-compose.yml.j2
+      dest: "/opt/compose/{{ role_name }}/docker-compose.yml"
+    notify: compose up
+
+  - name: flush handlers
+    meta: flush_handlers

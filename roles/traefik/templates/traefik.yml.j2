@@ -1,0 +1,51 @@
+#!/etc/traefik/traefik.yml
+entryPoints:
+  web:
+    address: :80
+  web-secure:
+    address: :443
+  metrics:
+    address: :9101
+certificatesResolvers:
+  staging:
+    acme:
+      email: {{ EMAIL }}
+      storage: /certs/acme.json
+      dnsChallenge:
+        # used during the challenge
+        provider: route53
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+  prod:
+    acme:
+      email: {{ EMAIL }}
+      storage: /certs/acme.json
+      dnsChallenge:
+        # used during the challenge
+        provider: route53
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+      caServer: https://acme-v02.api.letsencrypt.org/directory
+providers:
+  docker:
+    endpoint: unix://var/run/docker.sock
+    exposedByDefault: false
+    watch: true
+  file:
+    directory: /config/
+    watch: true
+api:
+  dashboard: true
+  insecure: false
+  debug: false
+log:
+  filepath: "/var/log/traefik.log"
+metrics:
+  prometheus:
+    entryPoint: metrics
+    addEntryPointsLabels: true
+    addServicesLabels: true
+accessLog: {}

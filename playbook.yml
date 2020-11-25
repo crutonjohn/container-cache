@@ -1,0 +1,12 @@
+---
+  - name: Set up docker host
+    hosts: dockerpi
+    become: true
+    remote_user: ubuntu
+    roles:
+      - role: docker
+        tags: [ docker ]
+      - role: registry
+        tags: [ registry ]
+      - role: traefik
+        tags: [ traefik ]
