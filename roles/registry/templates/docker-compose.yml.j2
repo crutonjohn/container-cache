@@ -20,6 +20,7 @@ services:
       - REGISTRY_PROXY_PASSWORD={{ DOCKER_LOGIN_PASSWORD }}
     volumes:
       - /mnt/registry:/var/lib/registry
+      - ./config.yml:/etc/docker/registry/config.yml
     networks:
       - traefik-proxy
 networks:

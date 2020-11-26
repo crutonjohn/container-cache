@@ -10,5 +10,11 @@
       dest: "/opt/compose/{{ role_name }}/docker-compose.yml"
     notify: compose up
 
+  - name: template {{ role_name }} config file
+    template:
+      src: config.yml.j2
+      dest: "/opt/compose/{{ role_name }}/config.yml"
+    notify: compose up
+
   - name: flush handlers
     meta: flush_handlers
