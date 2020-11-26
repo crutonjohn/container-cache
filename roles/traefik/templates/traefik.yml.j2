@@ -10,7 +10,7 @@ certificatesResolvers:
   staging:
     acme:
       email: {{ EMAIL }}
-      storage: /certs/acme.json
+      storage: /certs/staging.json
       dnsChallenge:
         # used during the challenge
         provider: route53
@@ -21,7 +21,7 @@ certificatesResolvers:
   prod:
     acme:
       email: {{ EMAIL }}
-      storage: /certs/acme.json
+      storage: /certs/prod.json
       dnsChallenge:
         # used during the challenge
         provider: route53
